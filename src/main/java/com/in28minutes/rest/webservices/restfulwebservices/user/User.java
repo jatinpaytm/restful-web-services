@@ -1,11 +1,26 @@
 package com.in28minutes.rest.webservices.restfulwebservices.user;
 
+/**
+ * Added Spring Validations
+ * and for any errors to display implemented CustomizedResponseEntityExceptionHandler.java class
+ */
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDate;
 
 public class User {
 
     private Integer id;
+
+    @Size(min=2, message = "Name should have atleast 2 characters")
+    @JsonProperty("user_name")  // it will just change name to user_name is json file
     private String name;
+
+    @Past(message = "Birth Date should be in the past")
+    @JsonProperty("birth_date")
     private LocalDate birthDate;
 
     public User(Integer id, String name, LocalDate birthDate) {
