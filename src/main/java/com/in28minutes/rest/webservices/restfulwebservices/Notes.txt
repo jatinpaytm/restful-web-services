@@ -1,0 +1,36 @@
+TO CHANGE FROM HIBERNATE TO MYsql just follow the below Steps :
+----------------------------------------------------
+Launch MySQL as Docker Container:
+Run this command in terminal
+docker run --detach --env MYSQL_ROOT_PASSWORD=dummypassword --env MYSQL_USER=social-media-user --env MYSQL_PASSWORD=dummypassword --env MYSQL_DATABASE=social-media-database --name mysql --publish 3306:3306 mysql:8-oracle
+
+----------------------------------------
+ADD this in application.properties :
+#spring.datasource.url=jdbc:h2:mem:testdb
+spring.jpa.show-sql=true
+spring.datasource.url=jdbc:mysql://localhost:3306/social-media-database
+spring.datasource.username=social-media-user
+spring.datasource.password=dummypassword
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+
+-----------------------------------------
+
+Add this in pom.xml and comment out hibernate :
+
+<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<scope>runtime</scope>
+</dependency>
+
+--------------------------------------------
+To connect to mysql after adding dependencies : Now if you restart the application the data will not be lost
+1. Install mysqlsh
+Go to terminal : Run the below Commands ->
+->  mysqlsh
+->  \connect social-media-user@localhost:3306     // for password refer application.properties file
+->  \use social-media-database
+->  \sql
+->  select *from user_details;
+-> select *from post;
