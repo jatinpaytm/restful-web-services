@@ -13,6 +13,14 @@ public class SpringSecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
+        // added this for swagger when spring security enabled
+//        http.authorizeRequests()
+//                .requestMatchers("/swagger-ui.html", "/v2/api-docs", "/swagger-resources/**", "/webjars/**")
+//                .permitAll()
+//                .anyRequest().authenticated()
+//                .and()
+//                .csrf().disable();
+
 //		1) All requests should be authenticated
         http.authorizeHttpRequests(
                 auth -> auth.anyRequest().authenticated()
